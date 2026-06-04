@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface-950 text-white;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  /* Light theme overrides */
+  html.light body {
+    @apply bg-gray-50 text-gray-900;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-600;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary-600/40;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .bg-surface-750 {
+    background-color: #2a2a2e;
+  }
+
+  /* Prose dark overrides */
+  .prose-invert {
+    --tw-prose-body: theme(colors.surface.300);
+    --tw-prose-headings: theme(colors.white);
+    --tw-prose-lead: theme(colors.surface.300);
+    --tw-prose-links: theme(colors.primary.400);
+    --tw-prose-bold: theme(colors.white);
+    --tw-prose-counters: theme(colors.surface.400);
+    --tw-prose-bullets: theme(colors.surface.600);
+    --tw-prose-hr: theme(colors.surface.700);
+    --tw-prose-quotes: theme(colors.surface.200);
+    --tw-prose-quote-borders: theme(colors.primary.500);
+    --tw-prose-captions: theme(colors.surface.400);
+    --tw-prose-code: theme(colors.accent.400);
+    --tw-prose-pre-code: theme(colors.surface.300);
+    --tw-prose-pre-bg: theme(colors.surface.900);
+    --tw-prose-th-borders: theme(colors.surface.700);
+    --tw-prose-td-borders: theme(colors.surface.800);
+  }
+
+  /* Fullscreen player styles */
+  :fullscreen {
+    background-color: black;
+  }
+}
+
+/* Video fullscreen */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+/* Animation utilities */
+@keyframes waveform {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.waveform-bar {
+  animation: waveform 1s ease-in-out infinite;
+}
+.waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+.waveform-bar:nth-child(5) { animation-delay: 0.4s; }
