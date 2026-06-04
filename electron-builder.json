@@ -5,16 +5,10 @@
   "directories": {
     "output": "dist-electron"
   },
-  "files": [
-    "dist/**/*",
-    "package.json"
-  ],
+  "files": ["dist/**/*", "package.json", "main.js"],
   "mac": {
     "category": "public.app-category.video",
-    "target": [
-      "dmg",
-      "zip"
-    ]
+    "target": ["dmg", "zip"]
   },
   "win": {
     "target": [
@@ -25,10 +19,7 @@
     ]
   },
   "linux": {
-    "target": [
-      "AppImage",
-      "deb"
-    ],
+    "target": ["AppImage", "deb"],
     "category": "AudioVideo"
   },
   "nsis": {

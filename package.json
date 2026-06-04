@@ -1,14 +1,14 @@
 {
   "name": "beyond-player",
   "private": true,
-  "author": "Mark Kiprotich",
+  "author": "Mark Kiprotich <mark@markkiprotich.com>",
   "description": "A universal modern media player for desktop and web",
   "version": "0.1.0",
   "main": "main.js",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "vite build --base=./",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
