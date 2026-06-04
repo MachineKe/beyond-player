@@ -47,6 +47,12 @@ export function PDFViewer({ src, className }: PDFViewerProps) {
     setError("");
     setCanvases([]);
 
+    if (!src) {
+      setError("No valid document source provided.");
+      setLoading(false);
+      return;
+    }
+
     const load = async () => {
       try {
         const pdfjsLib = await import("pdfjs-dist");
@@ -55,16 +61,8 @@ export function PDFViewer({ src, className }: PDFViewerProps) {
           import.meta.url,
         ).toString();
 
-        // Handle blob URLs (file uploads) and regular URLs
-        let pdfData: string | ArrayBuffer;
-        if (src.startsWith("blob:")) {
-          const response = await fetch(src);
-          pdfData = await response.arrayBuffer();
-        } else {
-          pdfData = src;
-        }
-
-        const pdf = await pdfjsLib.getDocument(pdfData).promise;
+        // Pass the URL (including blob URLs) directly to PDF.js
+        const pdf = await pdfjsLib.getDocument(src).promise;
         if (cancelled) return;
         pdfRef.current = pdf;
         setNumPages(pdf.numPages);
@@ -87,7 +85,7 @@ export function PDFViewer({ src, className }: PDFViewerProps) {
       } catch (e) {
         if (!cancelled) {
           setError(
-            "Failed to load PDF. Make sure the file is a valid PDF document.",
+            "Failed to load PDF. If you recently refreshed the page, please re-upload or select the file again from your library.",
           );
           setLoading(false);
         }

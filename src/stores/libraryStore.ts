@@ -301,6 +301,43 @@ export const useLibraryStore = create<LibraryState & LibraryActions>()(
         sortBy: s.sortBy,
         sortOrder: s.sortOrder,
       }),
+      merge: (persistedState: any, currentState) => {
+        if (!persistedState) return currentState;
+
+        const sanitizeFiles = (files: any[]) => {
+          if (!Array.isArray(files)) return [];
+          return files.map((f) => {
+            if (f && typeof f === "object" && f.url?.startsWith("blob:")) {
+              return { ...f, url: "" };
+            }
+            return f;
+          });
+        };
+
+        const sanitizedPlaylists = Array.isArray(persistedState.playlists)
+          ? persistedState.playlists.map((p: any) => ({
+              ...p,
+              items: Array.isArray(p.items)
+                ? p.items.map((item: any) => ({
+                    ...item,
+                    file:
+                      item.file && item.file.url?.startsWith("blob:")
+                        ? { ...item.file, url: "" }
+                        : item.file,
+                  }))
+                : p.items,
+            }))
+          : persistedState.playlists;
+
+        return {
+          ...currentState,
+          ...persistedState,
+          files: sanitizeFiles(persistedState.files),
+          recentFiles: sanitizeFiles(persistedState.recentFiles),
+          favoriteFiles: sanitizeFiles(persistedState.favoriteFiles),
+          playlists: sanitizedPlaylists,
+        };
+      },
     },
   ),
 );
